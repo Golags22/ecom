@@ -1,0 +1,112 @@
+<!-- shop/templates/shop/product_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header */
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+
+        /* Product List */
+        ul {
+            list-style-type: none; /* Remove default list styling */
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping of items */
+            justify-content: center; /* Center items */
+            padding: 0;
+            max-width: 1000px; /* Limit max width */
+            width: 100%;
+        }
+
+        li {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin: 10px;
+            width: 250px; /* Fixed width for product cards */
+            text-align: center; /* Center text */
+            transition: transform 0.2s; /* Animation effect */
+        }
+
+        li:hover {
+            transform: scale(1.05); /* Scale up on hover */
+        }
+
+        img {
+            max-width: 100%; /* Responsive image */
+            height: auto;
+            border-radius: 5px; /* Rounded image corners */
+        }
+
+        h2 {
+            font-size: 1.5em; /* Product name font size */
+            color: #333;
+            margin: 10px 0; /* Margin above and below product name */
+        }
+
+        p {
+            margin: 10px 0; /* Margin above and below price */
+        }
+
+        /* Price Styling */
+        .price {
+            font-weight: bold;
+            color: #4CAF50;
+            font-size: 1.2em;
+        }
+
+        /* Link Styling */
+        a {
+            color: #ffffff;
+            background-color: #4CAF50;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #45a049; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Products</h1>
+    <ul>
+        {% for product in products %}
+        <li>
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            <p class="price">${{ product.price }}</p>
+            <a href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!-- shop/templates/home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header */
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+a{
+    text-decoration:none;
+}
+        /* Link Styling */
+        .login a {
+            color: #ffffff;
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .login a:hover {
+            background-color: #45a049;
+        }
+
+        /* Product Container for horizontal layout */
+        .product-container {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            max-width: 1200px; /* Set a max-width for better alignment */
+        }
+
+        /* Product Card Styling */
+        .product {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            width: 300px;
+            text-align: center;
+            flex: 1 1 auto;
+            cursor: pointer;
+            
+        }
+
+        
+        .product h2 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .product p {
+            margin-bottom: 10px;
+            font-size: 0.9em; /* Slightly smaller font size for description */
+            color: #666; /* Grey color for better contrast */
+        }
+
+        /* Price Styling */
+        .price {
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My E-commerce Site!</h1>
+    <p class="login"><a href="{% url 'login' %}">Start shoping</a></p>
+    <div class="product-container">
+        {% for product in products %}
+        <div class="product">
+            <a href="{% url 'product_detail' product.id %}">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; height: auto; border-radius: 5px;" />
+                <h2>{{ product.name }}</h2>
+                <p>{{ product.description }}</p>
+                <p class="price">Price: ${{ product.price }}</p>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

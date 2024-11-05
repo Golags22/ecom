@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        /* Body and container styling */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+
+        .register-container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        /* Form field styling */
+        form p {
+            margin: 1rem 0;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 0.25rem;
+            font-size: 1rem;
+        }
+
+        /* Error message styling */
+        .errorlist {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Submit button styling */
+        button[type="submit"] {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Show password toggle */
+        .show-password {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* Login link */
+        p {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        p a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h1>Register</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                <p>
+                    <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <ul class="errorlist">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </p>
+            {% endfor %}
+
+            <!-- Show/Hide password toggle -->
+            <div class="show-password">
+                <input type="checkbox" id="togglePassword" onclick="togglePasswordVisibility()">
+                <label for="togglePassword">Show password</label>
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
+    </div>
+
+    <script>
+        // Function to toggle password visibility
+        function togglePasswordVisibility() {
+            // Find all password fields
+            const passwordFields = document.querySelectorAll('input[type="password"]');
+            
+            passwordFields.forEach(field => {
+                // Toggle between password and text type
+                field.type = field.type === 'password' ? 'text' : 'password';
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Products</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light background color */
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px; /* Max width of the container */
+            margin: 50px auto; /* Center the container */
+            padding: 20px;
+            background-color: #fff; /* White background */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        h1 {
+            text-align: center; /* Center the main heading */
+            color: #333; /* Darker text color */
+        }
+
+        h2 {
+            color: #555; /* Slightly lighter color for subheadings */
+        }
+
+        form {
+            margin-bottom: 20px; /* Space between forms */
+        }
+
+        .product-form {
+            display: flex; /* Flexbox for layout */
+            flex-direction: column; /* Stack items vertically */
+        }
+
+        .product-form input,
+        .product-form select,
+        .product-form textarea {
+            margin-bottom: 15px; /* Space between fields */
+            padding: 10px; /* Padding inside fields */
+            border: 1px solid #ddd; /* Light border */
+            border-radius: 4px; /* Rounded corners */
+            font-size: 16px; /* Font size */
+        }
+
+        .product-form input:focus,
+        .product-form select:focus,
+        .product-form textarea:focus {
+            border-color: #007bff; /* Blue border on focus */
+            outline: none; /* Remove default outline */
+        }
+
+        .submit-button {
+            padding: 10px 15px; /* Button padding */
+            background-color: #28a745; /* Green background */
+            color: white; /* White text */
+            border: none; /* No border */
+            border-radius: 4px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            font-size: 16px; /* Font size */
+        }
+
+        .submit-button:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        ul {
+            list-style-type: none; /* Remove default list styles */
+            padding: 0; /* Remove default padding */
+        }
+
+        li {
+            margin-bottom: 10px; /* Space between list items */
+            padding: 10px;
+            background-color: #f9f9f9; /* Light gray background for list items */
+            border: 1px solid #ddd; /* Light border */
+            border-radius: 4px; /* Rounded corners */
+            display: flex; /* Flexbox for layout */
+            justify-content: space-between; /* Space between items */
+            align-items: center; /* Center items vertically */
+        }
+
+        a {
+            text-decoration: none; /* Remove underline from links */
+            color: #007bff; /* Link color */
+        }
+
+        a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        .delete-button {
+            padding: 5px 10px; /* Button padding */
+            background-color: #dc3545; /* Red background */
+            color: white; /* White text */
+            border: none; /* No border */
+            border-radius: 4px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+
+        .delete-button:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Manage Your Products</h1>
+        <h2>Your Products</h2>
+        <ul>
+            {% for product in products %}
+                <li>
+                    {{ product.name }} - ${{ product.price }} 
+                    <a href="{% url 'edit_product' product.id %}">Edit</a>
+                    <form method="POST" action="{% url 'delete_product' product.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                </li>
+            {% empty %}
+                <li>No products available.</li>
+            {% endfor %}
+            <p><a href="{% url 'add_product' %}">Create something New!</a></p>
+            <p><a href="{% url 'profile' %}">Dashboard</a></p>
+        </ul>
+    </div>
+</body>
+</html>
